@@ -3,17 +3,18 @@ package com.myBlogApp.services;
 import java.util.List;
 
 import com.myBlogApp.exception.ResourceNotFoundException;
-import com.myBlogApp.payloads.UserDTO;
+import com.myBlogApp.payloads.UserDTOInput;
+import com.myBlogApp.payloads.UserDTOOutput;
 
 public interface UserService {
 
-	UserDTO createUser(UserDTO user);
+	UserDTOOutput createUser(UserDTOInput user);
 
-	UserDTO getUserById(Integer id) throws ResourceNotFoundException;
+	UserDTOOutput getUserById(Integer id) throws ResourceNotFoundException;
 
-	List<UserDTO> getAllUsers();
+	List<UserDTOOutput> getAllUsers();
 
-	UserDTO updateUser(UserDTO user, Integer userId) throws ResourceNotFoundException;
+	UserDTOOutput updateUser(UserDTOInput user, Integer userId) throws ResourceNotFoundException;
 
 	void deleteUser(Integer userId) throws ResourceNotFoundException;
 

@@ -12,22 +12,28 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import lombok.Data;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "USERS")
-@Data
-public class User {
-
+@Table(name = "categories")
+@NoArgsConstructor
+@Getter
+@Setter
+public class Category {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer user_id;
-	@Column(name = "USER_NAME", nullable = false, length = 100)
-	private String name;
-	private String email;
-	private String password;
-	private String about;
+	private Integer categoryId;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Column(name = "title", length = 100, nullable = false)
+	private String categoryTitle;
+	
+	@Column(name = "description")
+	private String categoryDescription;
+	
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	Set<Post> posts = new HashSet<>();
 }

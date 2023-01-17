@@ -2,6 +2,8 @@ package com.myBlogApp.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.myBlogApp.payloads.ApiResponse;
-import com.myBlogApp.payloads.UserDTO;
+import com.myBlogApp.payloads.UserDTOInput;
+import com.myBlogApp.payloads.UserDTOOutput;
 import com.myBlogApp.services.UserService;
 
 @RestController
@@ -27,37 +30,37 @@ public class UserController {
 
 	// POST - create user
 	@PostMapping("/")
-	public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDto) {
+	public ResponseEntity<UserDTOOutput> createUser(@Valid @RequestBody UserDTOInput userDto) {
 
-		UserDTO createdUserDto = this.userService.createUser(userDto);
+		UserDTOOutput createdUserDto = this.userService.createUser(userDto);
 
 		return new ResponseEntity<>(createdUserDto, HttpStatus.CREATED);
 	}
 
 	// PUT - update user
 	@PutMapping("/{userId}")
-	public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDto, @PathVariable("userId") Integer userId) {
-		UserDTO updatedUser = this.userService.updateUser(userDto, userId);
+	public ResponseEntity<UserDTOOutput> updateUser(@Valid @RequestBody UserDTOInput userDto, @PathVariable("userId") Integer userId) {
+		UserDTOOutput updatedUser = this.userService.updateUser(userDto, userId);
 
 		return ResponseEntity.ok(updatedUser);
 	}
 
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<ApiResponse> deleteUser(@PathVariable("userId") Integer userId) {
+	public ResponseEntity<ApiResponse> deleteUser( @PathVariable("userId") Integer userId) {
 		this.userService.deleteUser(userId);
 
 		return new ResponseEntity<ApiResponse>(new ApiResponse("User Deleted Successfully", true), HttpStatus.OK);
 	}
 
 	@GetMapping("/")
-	public ResponseEntity<List<UserDTO>> getAllUsers() {
+	public ResponseEntity<List<UserDTOOutput>> getAllUsers() {
 
 		return ResponseEntity.ok(this.userService.getAllUsers());
 
 	}
 
 	@GetMapping("/{userId}")
-	public ResponseEntity<UserDTO> getAllUsers(@PathVariable("userId") Integer id) {
+	public ResponseEntity<UserDTOOutput> getUser(@PathVariable("userId") Integer id) {
 
 		return ResponseEntity.ok(this.userService.getUserById(id));
 

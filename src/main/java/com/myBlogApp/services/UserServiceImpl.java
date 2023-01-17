@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.myBlogApp.entities.User;
 import com.myBlogApp.exception.ResourceNotFoundException;
-import com.myBlogApp.payloads.UserDTO;
+import com.myBlogApp.payloads.UserDTOInput;
+import com.myBlogApp.payloads.UserDTOOutput;
 import com.myBlogApp.repositories.UserRepo;
 
 @Service
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
 	
 	
 	@Override
-	public UserDTO createUser(UserDTO userDto) {
+	public UserDTOOutput createUser(UserDTOInput userDto) {
 
 		User user = this.dtoToUser(userDto);
 		User savedUser = userRepo.save(user);
@@ -33,23 +34,23 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO getUserById(Integer userId) throws ResourceNotFoundException {
+	public UserDTOOutput getUserById(Integer userId) throws ResourceNotFoundException {
 		User user = userRepo.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User", " id ", userId));
 
 		return this.UserToDto(user);
 	}
 
 	@Override
-	public List<UserDTO> getAllUsers() {
+	public List<UserDTOOutput> getAllUsers() {
 		List<User> users = this.userRepo.findAll();
 
-		List<UserDTO> userDtos = users.stream().map(user -> this.UserToDto(user)).collect(Collectors.toList());
+		List<UserDTOOutput> userDtos = users.stream().map(user -> this.UserToDto(user)).collect(Collectors.toList());
 
 		return userDtos;
 	}
 
 	@Override
-	public UserDTO updateUser(UserDTO userDto, Integer userId) throws ResourceNotFoundException {
+	public UserDTOOutput updateUser(UserDTOInput userDto, Integer userId) throws ResourceNotFoundException {
 		User user = this.userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
 
@@ -72,16 +73,16 @@ public class UserServiceImpl implements UserService {
 
 	}
 
-	private User dtoToUser(UserDTO userDto) {
+	private User dtoToUser(UserDTOInput userDto) {
 		
 		User user = this.modelMapper.map(userDto, User.class);
 		return user;
 		
 	}
 
-	private UserDTO UserToDto(User user) {
+	private UserDTOOutput UserToDto(User user) {
 
-		UserDTO userDto = this.modelMapper.map(user, UserDTO.class);
+		UserDTOOutput userDto = this.modelMapper.map(user, UserDTOOutput.class);
 
 		return userDto;
 
