@@ -3,7 +3,7 @@ package com.myBlogApp.exception;
 public class ResourceNotFoundException extends RuntimeException {
 
 	String resourceName;
-	String feildName;
+	String fieldName;
 	long fieldValue;
 
 	public ResourceNotFoundException() {
@@ -13,7 +13,7 @@ public class ResourceNotFoundException extends RuntimeException {
 	public ResourceNotFoundException(String resourceName, String feildName, long fieldValue) {
 		super(String.format("%s not found with %s : %s", resourceName, feildName, fieldValue));
 		this.resourceName = resourceName;
-		this.feildName = feildName;
+		this.fieldName = feildName;
 		this.fieldValue = fieldValue;
 	}
 
@@ -26,11 +26,11 @@ public class ResourceNotFoundException extends RuntimeException {
 	}
 
 	public String getFeildName() {
-		return feildName;
+		return fieldName;
 	}
 
 	public void setFeildName(String feildName) {
-		this.feildName = feildName;
+		this.fieldName = feildName;
 	}
 
 	public long getFieldValue() {
